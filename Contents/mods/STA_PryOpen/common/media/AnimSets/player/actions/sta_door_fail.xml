@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animNode>
+	<m_Name>sta_fail</m_Name>
+	<m_AnimName>Bob_Crowbar_DoorLeft_Fail</m_AnimName>
+	<m_Looped>false</m_Looped>
+	<m_BlendTime>0.20</m_BlendTime>
+	<m_SpeedScale>0.80</m_SpeedScale>
+	<m_SyncTrackingEnabled>false</m_SyncTrackingEnabled>
+	<m_Conditions>
+		<m_Name>PerformingAction</m_Name>
+		<m_Type>STRING</m_Type>
+		<m_Value>STA_ForceOpenDoorLeftOutcome</m_Value>
+	</m_Conditions>
+	<m_Conditions>
+		<m_Name>STA_ForceOpenDoorLeftOutcome</m_Name>
+		<m_Type>STRING</m_Type>
+		<m_Value>fail</m_Value>
+	</m_Conditions>
+	<m_Events>
+		<m_EventName>STA_ForceOpenDoorLeftAnimLooped</m_EventName>
+		<m_Time>End</m_Time>
+		<m_ParameterValue>fail</m_ParameterValue>
+	</m_Events>
+</animNode>
