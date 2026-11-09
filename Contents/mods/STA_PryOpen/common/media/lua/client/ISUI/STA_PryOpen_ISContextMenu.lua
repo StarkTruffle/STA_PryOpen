@@ -21,6 +21,16 @@ function ContextMenu.onPrySelectDoor(worldObjects, object, player)
     end
 end
 
+function ContextMenu.onPrySelectVehicle(playerObj, square, object)
+    -- if luautils.walkAdj(playerObj, square, false) then
+    local crowbar = playerObj:getInventory():getFirstTagEvalRecurse(ItemTag.CROWBAR, predicateNotBroken)
+    if not crowbar then return end
+    ISWorldObjectContextMenu.transferIfNeeded(playerObj, crowbar)
+    ISInventoryPaneContextMenu.equipWeapon(crowbar, true, true, playerObj:getIndex())
+    ISTimedActionQueue.add(STA_PryOpen_ISPryOpenActionVehicle:new(playerObj, object))
+    -- end
+end
+
 function ContextMenu.onFillWorldContext(playerIdx, context, worldObjects, test)
     if test and ISWorldObjectContextMenu.Test then return true end
 
@@ -49,14 +59,11 @@ function ContextMenu.onFillWorldContext(playerIdx, context, worldObjects, test)
 
     if securityDoor then
         local subMenu = context:getOptionFromName(getText("ContextMenu_Door_option")) and context:getSubMenu(context:getOptionFromName(getText("ContextMenu_Door_option")).subOption)
-        local option = subMenu:addOption(getText("Force Open"), worldObjects, ContextMenu.onPrySelectDoor, securityDoor, playerIdx)
+        local option = subMenu:addOptionOnTop(getText("Force"), worldObjects, ContextMenu.onPrySelectDoor, securityDoor, playerIdx)
     end
     if vehicle and part then
-        local option = context:addOption("TestV", worldObjects, nil, vehicle, part, playerIdx)
+        local option = context:addOptionOnTop(getText("Force"), getSpecificPlayer(playerIdx), ContextMenu.onPrySelectVehicle, worldObjects:get(0):getSquare(), part)
     end
-    
-
-    -- local subMenu = context:getOptionFromName(getText("ContextMenu_Door_option")) and context:getSubMenu(context:getOptionFromName(getText("ContextMenu_Door_option")).subOption)
 end
 
 Events.OnFillWorldObjectContextMenu.Add(ContextMenu.onFillWorldContext)
