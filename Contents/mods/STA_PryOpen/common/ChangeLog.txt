@@ -120,3 +120,6 @@ Version 1.16.7
 - Updated Russian translation
 - Removed legacy logging code
 [ ------ ]
+[ Version 1.23.0 ]
+- Override the vanilla force option when pry open is enabled for b42.22
+[ ------ ]
